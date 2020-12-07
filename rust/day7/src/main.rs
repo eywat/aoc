@@ -22,7 +22,7 @@ fn parse<'a>(input: &'a str) -> Rules {
             let bag = Bag(bag);
             let contents = contents
                 .find_iter(rule)
-                .map(move |cap| {
+                .map(|cap| {
                     let cap = cap.as_str();
                     let (count, color) = split_once(cap, ' ').unwrap();
                     (count.parse().unwrap(), Bag(color))
@@ -31,7 +31,7 @@ fn parse<'a>(input: &'a str) -> Rules {
 
             (bag, contents)
         })
-        .collect::<HashMap<_, _>>()
+        .collect::<Rules>()
 }
 
 fn contains_bag(bag: &Bag, rule: &Bag, rules: &Rules) -> bool {
@@ -45,9 +45,12 @@ fn contains_bag(bag: &Bag, rule: &Bag, rules: &Rules) -> bool {
 }
 
 fn count_bags(bag: &Bag, rules: &Rules) -> usize {
-    match rules.get(bag){
-        Some(content) => content.iter().map(|(count, bag)| count + count * count_bags(bag, rules)).sum(),
-        None => 0
+    match rules.get(bag) {
+        Some(content) => content
+            .iter()
+            .map(|(count, bag)| count + count * count_bags(bag, rules))
+            .sum(),
+        None => 0,
     }
 }
 
