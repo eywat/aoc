@@ -1,4 +1,4 @@
-const INPUT: &str = include_str!("../input.txt");
+const INPUT: &str = include_str!("../../../input/day5.txt");
 
 fn seat_id(s: &str) -> u16 {
     s.chars().fold(0, |acc, c| {

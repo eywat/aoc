@@ -1,6 +1,6 @@
 use std::collections::HashSet;
 
-const INPUT: &str = include_str!("../input.txt");
+const INPUT: &str = include_str!("../../../input/day6.txt");
 
 #[timed::timed]
 fn parse<'a>(input: &'a str) -> Vec<&'a str> {
@@ -38,4 +38,22 @@ fn main() {
     let input = parse(INPUT);
     println!("Solution 1: {}", solve1(&input));
     println!("Solution 2: {}", solve2(&input));
+}
+
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn test_solve1() {
+        let input = parse(INPUT);
+        assert_eq!(solve1(&input), 6735)
+    }
+
+    #[test]
+    fn test_solve2() {
+        let input = parse(INPUT);
+        assert_eq!(solve2(&input), 3221)
+    }
 }

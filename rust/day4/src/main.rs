@@ -1,7 +1,7 @@
 use std::collections::{HashMap, HashSet};
 use util::split_once;
 
-const INPUT: &str = include_str!("../input.txt");
+const INPUT: &str = include_str!("../../../input/day4.txt");
 
 fn filter_valid<'a>(
     input: &'a str,

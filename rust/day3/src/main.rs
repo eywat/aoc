@@ -1,4 +1,4 @@
-const INPUT: &str = include_str!("../input.txt");
+const INPUT: &str = include_str!("../../../input/day3.txt");
 
 #[timed::timed]
 fn solve1(input: &str, (right, down): (usize, usize)) -> usize {

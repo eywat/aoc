@@ -1,4 +1,4 @@
-const INPUT: &str = include_str!("../input.txt");
+const INPUT: &str = include_str!("../../../input/day1.txt");
 
 #[timed::timed]
 fn parse(input: &str) -> Vec<isize> {

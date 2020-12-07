@@ -1,6 +1,6 @@
 use util::split_once;
 
-const INPUT: &str = include_str!("../input.txt");
+const INPUT: &str = include_str!("../../../input/day2.txt");
 
 #[timed::timed]
 fn parse(input: &str) -> Vec<(usize, usize, char, &str)> {
