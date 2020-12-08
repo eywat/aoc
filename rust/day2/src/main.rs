@@ -2,8 +2,10 @@ use util::split_once;
 
 const INPUT: &str = include_str!("../../../input/day2.txt");
 
+type PWRules<'a> = (usize, usize, char, &'a str);
+
 #[timed::timed]
-fn parse(input: &str) -> Vec<(usize, usize, char, &str)> {
+fn parse(input: &str) -> Vec<PWRules> {
     input
         .lines()
         .map(|line| {
@@ -20,7 +22,7 @@ fn parse(input: &str) -> Vec<(usize, usize, char, &str)> {
 }
 
 #[timed::timed]
-fn solve1(input: &[(usize, usize, char, &str)]) -> usize {
+fn solve1(input: &[PWRules]) -> usize {
     input
         .iter()
         .filter(|(min, max, letter, pw)| {
@@ -31,7 +33,7 @@ fn solve1(input: &[(usize, usize, char, &str)]) -> usize {
 }
 
 #[timed::timed]
-fn solve2(input: &[(usize, usize, char, &str)]) -> usize {
+fn solve2(input: &[PWRules]) -> usize {
     input
         .iter()
         .filter(|(pos1, pos2, letter, pw)| {

@@ -13,7 +13,7 @@ let solve2 data =
     |> fun (x,y,z) -> x*y*z
 
 let data = 
-    "input/day1.txt" 
+    "../input/day1.txt" 
     |> lines 
     |> Seq.map(int) 
     |> Seq.toList

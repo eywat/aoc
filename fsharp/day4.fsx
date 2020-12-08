@@ -76,7 +76,7 @@ let required =
        "pid" |]
 
 let data =
-    "input/day4.txt"
+    "../input/day4.txt"
     |> File.ReadAllText
     |> fun s -> s.Split("\n\n", System.StringSplitOptions.RemoveEmptyEntries)
     |> Array.map (parse)

@@ -19,7 +19,7 @@ let folder2 (data: char [] [], hits: int64) ((mov, down): int * int) =
 
 
 let data =
-    "input/day3.txt"
+    "../input/day3.txt"
     |> File.ReadLines
     |> Seq.map (Seq.toArray)
     |> Seq.toArray

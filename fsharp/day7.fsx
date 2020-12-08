@@ -45,7 +45,7 @@ let rec numberOfBags (bag: Bag) (rules: Map<Bag, Contents>): int =
 
 
 let data =
-    "input/day7.txt"
+    "../input/day7.txt"
     |> File.ReadLines
     |> Seq.map parse
     |> Map.ofSeq

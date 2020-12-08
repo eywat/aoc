@@ -2,7 +2,7 @@ open System.IO
 open FSharp.Collections
 
 let data =
-    "input/day6.txt"
+    "../input/day6.txt"
     |> File.ReadAllText
     |> fun s -> s.Split("\n\n")
 

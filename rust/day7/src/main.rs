@@ -12,7 +12,7 @@ type Contents<'a> = Vec<(usize, Bag<'a>)>;
 type Rules<'a> = HashMap<Bag<'a>, Contents<'a>>;
 
 #[timed::timed]
-fn parse<'a>(input: &'a str) -> Rules {
+fn parse(input: &str) -> Rules {
     let bag = Regex::new(r"^\w+\s\w+").unwrap();
     let contents = Regex::new(r"(?P<count>\d+)\s(?P<color>\w+\s\w+)").unwrap();
     input
