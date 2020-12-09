@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::HashSet;
 
 const INPUT: &str = include_str!("../../../input/day9.txt");
 
@@ -11,11 +11,9 @@ fn parse(input: &str) -> Vec<usize> {
 
 fn sum_of_ancestors_exists(ancestors: &[usize], target: usize) -> bool {
     // See https://stackoverflow.com/questions/4720271/find-a-pair-of-elements-from-an-array-whose-sum-equals-a-given-number
-    let map: HashMap<usize, ()> = ancestors
-        .iter()
-        .map(|val| (*val, ()))
-        .collect();
-    map.keys().any(|key| map.contains_key(&(target - key)))
+    let set: HashSet<usize> = ancestors.iter().copied().collect();
+    set.iter()
+        .any(|number| set.contains(&target.checked_sub(*number).unwrap_or(0)))
 }
 
 #[timed::timed]

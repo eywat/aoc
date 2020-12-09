@@ -10,9 +10,9 @@ let isAncestorSum (ancestor: uint64 []) (target: uint64): bool =
 let invalidNumber (data: uint64 []): uint64 option =
     Seq.windowed (26) data
     |> Seq.tryPick (fun window ->
-        match not (isAncestorSum window.[0..25] window.[25]) with
-        | true -> Some window.[25]
-        | _ -> None)
+        if not (isAncestorSum window.[0..25] window.[25])
+        then Some window.[25]
+        else None)
 
 let invalidSummands (data: uint64 []) (target: uint64): uint64 [] option =
     seq { 2 .. data.Length }
@@ -25,7 +25,7 @@ let data =
     |> Array.map (uint64)
 
 let invalid =
-    match invalidNumber data with 
+    match invalidNumber data with
     | Some number ->
         ignore (printfn "Solution 1: %d" number)
         number
