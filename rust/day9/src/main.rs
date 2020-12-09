@@ -11,11 +11,10 @@ fn parse(input: &str) -> Vec<usize> {
 
 fn sum_of_ancestors_exists(ancestors: &[usize], target: usize) -> bool {
     // See https://stackoverflow.com/questions/4720271/find-a-pair-of-elements-from-an-array-whose-sum-equals-a-given-number
-    let map = {
-        let mut map = HashMap::with_capacity(25);
-        map.extend(ancestors.iter().enumerate().map(|(idx, val)| (*val, idx)));
-        map
-    };
+    let map: HashMap<usize, ()> = ancestors
+        .iter()
+        .map(|val| (*val, ()))
+        .collect();
     map.keys().any(|key| map.contains_key(&(target - key)))
 }
 
@@ -44,10 +43,13 @@ fn main() {
     let solution1 = invalid_number(&input).expect("No invalid number found!");
     println!("Solution 1: {}", solution1);
     let solution2 = {
-        let summands = invalid_number_summands(&input, solution1).expect("No continuous slice found");
+        let summands =
+            invalid_number_summands(&input, solution1).expect("No continuous slice found");
         let min = summands.iter().min();
         let max = summands.iter().max();
-        min.zip(max).map(|(min, max)| min + max).expect("Empty list")
+        min.zip(max)
+            .map(|(min, max)| min + max)
+            .expect("Empty list")
     };
     println!("Solution 2: {}", solution2);
 }
@@ -66,10 +68,13 @@ mod tests {
         let input = parse(INPUT);
         let solution1 = invalid_number(&input).expect("No invalid number found!");
         let solution2 = {
-            let summands = invalid_number_summands(&input, solution1).expect("No continuous slice found");
+            let summands =
+                invalid_number_summands(&input, solution1).expect("No continuous slice found");
             let min = summands.iter().min();
             let max = summands.iter().max();
-            min.zip(max).map(|(min, max)| min + max).expect("Empty list")
+            min.zip(max)
+                .map(|(min, max)| min + max)
+                .expect("Empty list")
         };
         assert_eq!(solution2, 13935797)
     }
