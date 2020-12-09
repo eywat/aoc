@@ -30,15 +30,11 @@ impl Program {
             })
             .collect();
 
-        let instruction_ptr = 0;
-        let accumulator = 0;
-        let loop_detection = HashSet::new();
-
         Self {
             src,
-            instruction_ptr,
-            accumulator,
-            loop_detection,
+            instruction_ptr: 0,
+            accumulator: 0,
+            loop_detection: HashSet::new(),
         }
     }
 
