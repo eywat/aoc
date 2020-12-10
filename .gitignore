@@ -1,0 +1,5 @@
+*/.ionide
+*/.fake
+*/.cargo
+*/.vscode
+*/target

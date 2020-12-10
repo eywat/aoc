@@ -1,23 +1,21 @@
-use std::collections::HashSet;
-
 const INPUT: &str = include_str!("../../../input/day9.txt");
 
-fn parse(input: &str) -> Vec<usize> {
+fn parse(input: &str) -> Vec<isize> {
     input
         .lines()
         .map(|n| n.parse().expect("Invalid input"))
         .collect()
 }
 
-fn sum_of_ancestors_exists(ancestors: &[usize], target: usize) -> bool {
+fn sum_of_ancestors_exists(ancestors: &[isize], target: isize) -> bool {
     // See https://stackoverflow.com/questions/4720271/find-a-pair-of-elements-from-an-array-whose-sum-equals-a-given-number
-    let set: HashSet<usize> = ancestors.iter().copied().collect();
+    let set: Vec<isize> = ancestors.iter().copied().collect();
     set.iter()
-        .any(|number| set.contains(&target.checked_sub(*number).unwrap_or(0)))
+        .any(|number| set.contains(&(target-number)))
 }
 
 #[timed::timed]
-fn invalid_number(input: &[usize]) -> Option<usize> {
+fn invalid_number(input: &[isize]) -> Option<isize> {
     input.windows(26).find_map(|window| {
         if !sum_of_ancestors_exists(&window[..25], window[25]) {
             Some(window[25])
@@ -28,11 +26,11 @@ fn invalid_number(input: &[usize]) -> Option<usize> {
 }
 
 #[timed::timed]
-fn invalid_number_summands<'a>(input: &'a [usize], target: usize) -> Option<&'a [usize]> {
+fn invalid_number_summands<'a>(input: &'a [isize], target: isize) -> Option<&'a [isize]> {
     (2..input.len()).find_map(|i| {
         input
             .windows(i)
-            .find(|&window| window.iter().sum::<usize>() == target)
+            .find(|&window| window.iter().sum::<isize>() == target)
     })
 }
 
