@@ -1,6 +1,6 @@
 [package]
-name = "day10"
-version = "2020.12.10"
+name = "day04"
+version = "2020.12.04"
 authors = ["Edward Waterman <edward.waterman@posteo.de>"]
 edition = "2018"
 
@@ -8,3 +8,4 @@ edition = "2018"
 
 [dependencies]
 timed = "0.1.5"
+"util" = {path =  "../util"}

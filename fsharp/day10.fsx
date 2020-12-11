@@ -3,9 +3,7 @@ open FSharp.Collections
 
 let parse input =
     let list = List.map (int) input |> List.sort
-    0
-    :: list
-    @ [ (List.last list) + 3 ]
+    0 :: list @ [ (List.last list) + 3 ]
 
 let rec joltageDiff (ones, threes) =
     function
@@ -18,16 +16,17 @@ let rec joltageDiff (ones, threes) =
 
 
 let rec numCombinations (paths: Map<int, uint64>) =
-    function 
-    | [] -> paths 
-    | head::tail ->
-        let nPaths = 
+    function
+    | [] -> paths
+    | head :: tail ->
+        let nPaths =
             seq { 1 .. 3 }
-            |> Seq.filter(fun i -> Map.containsKey (head - i) paths) 
-            |> Seq.sumBy(fun i -> Map.find (head - i) paths)
+            |> Seq.filter (fun i -> Map.containsKey (head - i) paths)
+            |> Seq.sumBy (fun i -> Map.find (head - i) paths)
+
         numCombinations (Map.add head nPaths paths) tail
 
-  
+
 let data =
     File.ReadLines "../input/day10.txt"
     |> Seq.toList
@@ -39,10 +38,10 @@ joltageDiff (0, 0) data
 |> printfn "Solution 1: %d"
 
 
-data 
-|> function 
-    | head::tail -> 
-        numCombinations (Map.add head (uint64 1) Map.empty) tail
-        |> Map.find (List.last data)
-        |> printfn "Solution 2: %d" 
-    | [] -> failwith "Empty list"
+data
+|> function
+| head :: tail ->
+    numCombinations (Map.add head (uint64 1) Map.empty) tail
+    |> Map.find (List.last data)
+    |> printfn "Solution 2: %d"
+| [] -> failwith "Empty list"

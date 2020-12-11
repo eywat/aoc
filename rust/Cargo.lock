@@ -45,8 +45,68 @@ dependencies = [
 ]
 
 [[package]]
-name = "day1"
+name = "day01"
 version = "2020.12.1"
+dependencies = [
+ "timed",
+]
+
+[[package]]
+name = "day02"
+version = "2020.12.2"
+dependencies = [
+ "timed",
+ "util",
+]
+
+[[package]]
+name = "day03"
+version = "2020.12.3"
+dependencies = [
+ "timed",
+]
+
+[[package]]
+name = "day04"
+version = "2020.12.4"
+dependencies = [
+ "timed",
+ "util",
+]
+
+[[package]]
+name = "day05"
+version = "2020.12.5"
+dependencies = [
+ "timed",
+]
+
+[[package]]
+name = "day06"
+version = "2020.12.6"
+dependencies = [
+ "timed",
+]
+
+[[package]]
+name = "day07"
+version = "2020.12.7"
+dependencies = [
+ "regex",
+ "timed",
+ "util",
+]
+
+[[package]]
+name = "day08"
+version = "2020.1.0"
+dependencies = [
+ "util",
+]
+
+[[package]]
+name = "day09"
+version = "0.1.0"
 dependencies = [
  "timed",
 ]
@@ -59,64 +119,8 @@ dependencies = [
 ]
 
 [[package]]
-name = "day2"
-version = "2020.12.2"
-dependencies = [
- "timed",
- "util",
-]
-
-[[package]]
-name = "day3"
-version = "2020.12.3"
-dependencies = [
- "timed",
-]
-
-[[package]]
-name = "day4"
-version = "2020.12.4"
-dependencies = [
- "timed",
- "util",
-]
-
-[[package]]
-name = "day5"
-version = "2020.12.5"
-dependencies = [
- "timed",
-]
-
-[[package]]
-name = "day6"
-version = "2020.12.6"
-dependencies = [
- "timed",
-]
-
-[[package]]
-name = "day7"
-version = "2020.12.7"
-dependencies = [
- "regex",
- "timed",
- "util",
-]
-
-[[package]]
-name = "day8"
+name = "day11"
 version = "0.1.0"
-dependencies = [
- "util",
-]
-
-[[package]]
-name = "day9"
-version = "0.1.0"
-dependencies = [
- "timed",
-]
 
 [[package]]
 name = "fnv"

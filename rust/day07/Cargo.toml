@@ -1,10 +1,12 @@
 [package]
-name = "day10"
-version = "2020.12.10"
+name = "day07"
+version = "2020.12.07"
 authors = ["Edward Waterman <edward.waterman@posteo.de>"]
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+regex = "1.4.2"
 timed = "0.1.5"
+util = {path = "../util"}
