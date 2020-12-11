@@ -63,7 +63,7 @@ let fix (instructions: Instruction []) (executedInstructions: Set<int>): int =
 
 
 let data =
-    "../input/day8.txt"
+    "../input/day08.txt"
     |> File.ReadAllLines
     |> Array.map parse
 

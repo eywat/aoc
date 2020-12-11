@@ -21,7 +21,7 @@ let invalidSummands (data: uint64 []) (target: uint64): uint64 [] option =
         |> Seq.tryFind (fun window -> Seq.sum window = target))
 
 let data =
-    File.ReadAllLines "../input/day9.txt"
+    File.ReadAllLines "../input/day09.txt"
     |> Array.map (uint64)
 
 let invalid =

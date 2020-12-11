@@ -9,7 +9,7 @@ let seatID ticket =
         | _ -> acc <<< 1) 0
 
 let data =
-    "../input/day5.txt"
+    "../input/day05.txt"
     |> File.ReadAllLines
     |> Array.map seatID
 

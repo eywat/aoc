@@ -99,28 +99,28 @@ dependencies = [
 
 [[package]]
 name = "day08"
-version = "2020.1.0"
+version = "2020.12.8"
 dependencies = [
  "util",
 ]
 
 [[package]]
 name = "day09"
-version = "0.1.0"
+version = "2020.12.9"
 dependencies = [
  "timed",
 ]
 
 [[package]]
 name = "day10"
-version = "0.1.0"
+version = "2020.12.10"
 dependencies = [
  "timed",
 ]
 
 [[package]]
 name = "day11"
-version = "0.1.0"
+version = "2020.12.11"
 
 [[package]]
 name = "fnv"

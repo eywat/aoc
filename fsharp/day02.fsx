@@ -29,7 +29,7 @@ let isValidPosition (rule: GroupCollection) =
 
 
 let data =
-    "../input/day2.txt"
+    "../input/day02.txt"
     |> lines
     |> Seq.map (parse)
     |> Seq.filter (Option.isSome)

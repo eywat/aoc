@@ -1,6 +1,6 @@
 [package]
 name = "day07"
-version = "2020.12.07"
+version = "2020.12.7"
 authors = ["Edward Waterman <edward.waterman@posteo.de>"]
 edition = "2018"
 
