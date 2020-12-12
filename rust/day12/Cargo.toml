@@ -1,0 +1,5 @@
+[package]
+name = "day12"
+version = "2020.12.12"
+authors = ["Edward Waterman <edward.waterman@posteo.de>"]
+edition = "2018"
