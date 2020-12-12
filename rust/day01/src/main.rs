@@ -1,40 +1,46 @@
+use std::time::Instant;
+use std::collections::HashSet;
+
 const INPUT: &str = include_str!("../../../input/day01.txt");
 
-#[timed::timed]
-fn parse(input: &str) -> Vec<isize> {
+fn parse(input: &str) -> HashSet<isize> {
     input.lines().map(|line| line.parse().unwrap()).collect()
 }
 
-#[timed::timed]
-fn solve1(input: &[isize]) -> isize {
-    for x in input.iter() {
-        for y in input.iter() {
-            if x + y == 2020 {
-                return x * y;
-            }
-        }
-    }
-    0
+fn solve1(input: &HashSet<isize>) -> Option<isize> {
+    input.iter().find_map(|i| match input.get(&(2020 - *i)) {
+        Some(j) => Some(i*j),
+        None => None
+    })
 }
 
-#[timed::timed]
-fn solve2(input: &[isize]) -> isize {
-    for x in input.iter() {
-        for y in input.iter() {
-            for z in input.iter() {
-                if x + y + z == 2020 {
-                    return x * y * z;
-                }
-            }
-        }
-    }
-    0
+fn solve2(input: &HashSet<isize>) -> Option<isize> {
+    input
+        .iter()
+        .find_map(|x| {
+            input
+                .iter()
+                .find_map(|y| match input.get(&(2020 - x - y)) {
+                    Some(z) => Some(x*y*z),
+                    None => None
+                })
+        })
 }
 
 fn main() {
+    let start = Instant::now();
     let input = parse(INPUT);
-    println!("Solution 1: {}", solve1(&input));
-    println!("Solution 2: {}", solve2(&input));
+    println!("Parsing took {}µs", start.elapsed().as_micros());
+
+    let start = Instant::now();
+    let solution1 = solve1(&input).unwrap();
+    println!("Solution 1 took {}µs", start.elapsed().as_micros());
+    println!("Solution 1: {}", solution1);
+    
+    let start = Instant::now();
+    let solution2 = solve2(&input).unwrap();
+    println!("Solution 2 took {}µs", start.elapsed().as_micros());
+    println!("Solution 2: {}", solution2);
 }
 
 #[cfg(test)]
@@ -43,12 +49,12 @@ mod tests {
     #[test]
     fn test_solve1() {
         let input = parse(INPUT);
-        assert_eq!(solve1(&input), 988771)
+        assert_eq!(solve1(&input), Some(988771))
     }
 
     #[test]
     fn test_solve2() {
         let input = parse(INPUT);
-        assert_eq!(solve2(&input), 171933104)
+        assert_eq!(solve2(&input), Some(171933104))
     }
 }

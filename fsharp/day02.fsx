@@ -1,4 +1,5 @@
 open System.IO
+open System.Diagnostics
 open System.Text.RegularExpressions
 
 let lines = File.ReadLines
@@ -28,6 +29,7 @@ let isValidPosition (rule: GroupCollection) =
         || (pw.[pos1] <> ltr && pw.[pos2] = ltr)
 
 
+let mutable start = Stopwatch.StartNew()
 let data =
     "../input/day02.txt"
     |> lines
@@ -35,13 +37,20 @@ let data =
     |> Seq.filter (Option.isSome)
     |> Seq.map (Option.get)
     |> Seq.toList
+printfn "Parsing took %fms" start.Elapsed.TotalMilliseconds
 
+start.Reset
+start.Start
 data
 |> Seq.filter (isValidCount)
 |> Seq.length
 |> printfn "Solution 1: %d"
+printfn "Solution 1 took %fms" start.Elapsed.TotalMilliseconds
 
+start.Reset
+start.Start
 data
 |> Seq.filter (isValidPosition)
 |> Seq.length
 |> printfn "Solution 2: %d"
+printfn "Solution 2 took %fms" start.Elapsed.TotalMilliseconds

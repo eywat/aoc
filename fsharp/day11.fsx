@@ -1,4 +1,5 @@
 open System.IO
+open System.Diagnostics
 
 type Tile =
     | Empty
@@ -107,6 +108,7 @@ let rec evolve (grid: Tile []) (dims: int * int) (rule: Tile [] -> int * int -> 
 
     if next = grid then next else evolve next dims rule
 
+let mutable start = Stopwatch.StartNew()
 let data =
     "../input/day11.txt" |> File.ReadAllLines
 
@@ -114,13 +116,20 @@ let dimX = data.Length
 let dimY = data.[0].Length
 let grid = parse data
 let evolveGrid = evolve grid (dimX, dimY)
+printfn "Parsing took %fms" start.Elapsed.TotalMilliseconds
 
+start.Reset
+start.Start
 evolveGrid ruleOne
 |> Seq.filter (fun tile -> tile = Occupied)
 |> Seq.length
 |> printfn "Solution 1: %d"
+printfn "Solution 1 took %fms" start.Elapsed.TotalMilliseconds
 
+start.Reset
+start.Start
 evolveGrid ruleTwo
 |> Seq.filter (fun tile -> tile = Occupied)
 |> Seq.length
 |> printfn "Solution 2: %d"
+printfn "Solution 2 took %fms" start.Elapsed.TotalMilliseconds

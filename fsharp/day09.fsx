@@ -1,4 +1,5 @@
 open System.IO
+open System.Diagnostics
 open FSharp.Collections
 
 let isAncestorSum (ancestor: uint64 []) (target: uint64): bool =
@@ -20,18 +21,25 @@ let invalidSummands (data: uint64 []) (target: uint64): uint64 [] option =
         Seq.windowed (i) data
         |> Seq.tryFind (fun window -> Seq.sum window = target))
 
+let mutable start = Stopwatch.StartNew()
 let data =
     File.ReadAllLines "../input/day09.txt"
     |> Array.map (uint64)
+printfn "Parsing took %fms" start.Elapsed.TotalMilliseconds
 
+start.Reset
+start.Start
 let invalid =
     match invalidNumber data with
     | Some number ->
         ignore (printfn "Solution 1: %d" number)
         number
     | _ -> failwith "No invalid number found"
+printfn "Solution 1 took %fms" start.Elapsed.TotalMilliseconds
 
-
+start.Reset
+start.Start
 match invalidSummands data invalid with
 | Some summands -> printfn "Solution 2: %d" ((Seq.min summands) + (Seq.max summands))
 | None -> failwith "No summands found"
+printfn "Solution 2 took %fms" start.Elapsed.TotalMilliseconds

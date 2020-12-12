@@ -1,13 +1,11 @@
-use std::collections::HashSet;
+use std::{collections::HashSet, time::Instant};
 
 const INPUT: &str = include_str!("../../../input/day06.txt");
 
-#[timed::timed]
 fn parse<'a>(input: &'a str) -> Vec<&'a str> {
     input.split("\n\n").collect()
 }
 
-#[timed::timed]
 fn solve1(input: &[&str]) -> usize {
     input
         .iter()
@@ -21,7 +19,6 @@ fn solve1(input: &[&str]) -> usize {
         .sum::<usize>()
 }
 
-#[timed::timed]
 fn solve2<'a>(input: &[&str]) -> usize {
     input.iter().map(|group| {
         let mut group = group
@@ -35,9 +32,19 @@ fn solve2<'a>(input: &[&str]) -> usize {
 }
 
 fn main() {
+    let start = Instant::now();
     let input = parse(INPUT);
-    println!("Solution 1: {}", solve1(&input));
-    println!("Solution 2: {}", solve2(&input));
+    println!("Parsing took {}µs", start.elapsed().as_micros());
+
+    let start = Instant::now();
+    let solution1 = solve1(&input);
+    println!("Solution 1 took {}µs", start.elapsed().as_micros());
+    println!("Solution 1: {}", solution1);
+    
+    let start = Instant::now();
+    let solution2 = solve2(&input);
+    println!("Solution 2 took {}µs", start.elapsed().as_micros());
+    println!("Solution 2: {}", solution2);
 }
 
 

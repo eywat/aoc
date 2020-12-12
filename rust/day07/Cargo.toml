@@ -8,5 +8,4 @@ edition = "2018"
 
 [dependencies]
 regex = "1.4.2"
-timed = "0.1.5"
 util = {path = "../util"}

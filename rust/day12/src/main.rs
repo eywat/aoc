@@ -11,18 +11,6 @@ enum Direction {
     West = 3,
 }
 
-impl Direction {
-    pub fn rotate(self, rotation: i8) -> Self {
-        match (self as i8 + (rotation + 4)) % 4 {
-            0 => Direction::North,
-            1 => Direction::East,
-            2 => Direction::South,
-            3 => Direction::West,
-            _ => unreachable!(),
-        }
-    }
-}
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum Instruction {
     North(i32),
@@ -55,6 +43,17 @@ impl BoatState1 {
     pub fn pos(&self) -> (i32, i32) {
         (self.x, self.y)
     }
+
+    fn rotate(self, rotation: i8) -> (i32, i32, Direction) {
+        let direction = match (self.direction as i8 + (rotation + 4)) % 4 {
+            0 => Direction::North,
+            1 => Direction::East,
+            2 => Direction::South,
+            3 => Direction::West,
+            _ => unreachable!(),
+        };
+        (self.x, self.y, direction)
+    }
 }
 
 impl Add<&Instruction> for BoatState1 {
@@ -68,8 +67,8 @@ impl Add<&Instruction> for BoatState1 {
             East(val) => (x + val, y, direction),
             South(val) => (x, y - val, direction),
             West(val) => (x - val, y, direction),
-            Left(val) => (x, y, direction.rotate(-val)),
-            Right(val) => (x, y, direction.rotate(val)),
+            Left(val) => self.rotate(-val),
+            Right(val) => self.rotate(val),
             Forward(val) => match direction {
                 Direction::North => (x, y + val, direction),
                 Direction::East => (x + val, y, direction),
@@ -105,7 +104,7 @@ impl Boatstate2 {
         (self.x, self.y)
     }
 
-    fn rotate(wx: i32, wy: i32, rotation: i8) -> (i32, i32) {
+    fn rotate(&self, rotation: i8) -> (i32, i32, i32, i32) {
         let rotation = (rotation - 4).abs() % 4;
         let (sin, cos) = match rotation {
             0 => (0, 1),
@@ -114,7 +113,7 @@ impl Boatstate2 {
             3 => (-1, 0),
             _ => unreachable!(),
         };
-        (wx * cos - wy * sin, wx * sin + wy * cos)
+        (self.x, self.y, self.wx * cos - self.wy * sin, self.wx * sin + self.wy * cos)
     }
 }
 
@@ -129,14 +128,8 @@ impl Add<&Instruction> for Boatstate2 {
             East(val) => (x, y, wx + val, wy),
             South(val) => (x, y, wx, wy - val),
             West(val) => (x, y, wx - val, wy),
-            Left(val) => {
-                let (wx, wy) = Self::rotate(wx, wy, -val);
-                (x, y, wx, wy)
-            }
-            Right(val) => {
-                let (wx, wy) = Self::rotate(wx, wy, val);
-                (x, y, wx, wy)
-            }
+            Left(val) => self.rotate(-val),
+            Right(val) => self.rotate(val),
             Forward(val) => (x + wx * val, y + wy * val, wx, wy),
         };
         Self { x, y, wx, wy }
@@ -154,8 +147,8 @@ fn parse(input: &str) -> Vec<Instruction> {
                 "E" => East(val.parse().unwrap()),
                 "S" => South(val.parse().unwrap()),
                 "W" => West(val.parse().unwrap()),
-                "L" => Left((val.parse::<i16>().unwrap() / 90) as i8),
-                "R" => Right((val.parse::<i16>().unwrap() / 90) as i8),
+                "L" => Left((val.parse::<u16>().unwrap() / 90) as i8),
+                "R" => Right((val.parse::<u16>().unwrap() / 90) as i8),
                 "F" => Forward(val.parse().unwrap()),
                 _ => unreachable!(),
             }
@@ -164,23 +157,24 @@ fn parse(input: &str) -> Vec<Instruction> {
 }
 
 fn main() {
+    let start = Instant::now();
     let input = parse(INPUT);
+    println!("Parsing took {}µs", start.elapsed().as_micros());
+
     let start = Instant::now();
     let (x, y) = input
         .iter()
         .fold(BoatState1::default(), |state, instr| state + instr)
         .pos();
-    let duration = start.elapsed().as_micros();
-    println!("Solution 1 took {}us", duration);
+    println!("Solutixon 1 took {}µs", start.elapsed().as_micros());
     println!("Solution 1: {}", x.abs() + y.abs());
-    
+
     let start = Instant::now();
     let (x, y) = input
-    .iter()
-    .fold(Boatstate2::default(), |state, instr| state + instr)
-    .pos();
-    let duration = start.elapsed().as_micros();
-    println!("Solution 2 took {}us", duration);
+        .iter()
+        .fold(Boatstate2::default(), |state, instr| state + instr)
+        .pos();
+    println!("Solution 2 took {}µs", start.elapsed().as_micros());
     println!("Solution 2: {}", x.abs() + y.abs());
 }
 

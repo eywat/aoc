@@ -1,5 +1,7 @@
 open System.IO
+open System.Diagnostics
 open FSharp.Collections
+
 
 let parse (data: string) =
     data.Split([| '\n'; ' ' |], System.StringSplitOptions.RemoveEmptyEntries)
@@ -75,16 +77,24 @@ let required =
        "ecl"
        "pid" |]
 
+let mutable start = Stopwatch.StartNew()
 let data =
     "../input/day04.txt"
     |> File.ReadAllText
     |> fun s -> s.Split("\n\n", System.StringSplitOptions.RemoveEmptyEntries)
     |> Array.map (parse)
     |> Array.filter (contains required)
+printfn "Parsing took %fms" start.Elapsed.TotalMilliseconds
 
+start.Reset
+start.Start
 data |> Array.length |> printfn "Solution 1: %d"
+printfn "Solution 1 took %fms" start.Elapsed.TotalMilliseconds
 
+start.Reset
+start.Start
 data
 |> Array.filter (Map.forall valid)
 |> Array.length
 |> printfn "Solution 2: %d"
+printfn "Solution 2 took %fms" start.Elapsed.TotalMilliseconds

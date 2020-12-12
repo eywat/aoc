@@ -124,14 +124,16 @@ fn evolve(
 }
 
 fn main() {
+    let start = Instant::now();
     let (grid, dims) = parse(INPUT);
+    println!("Parsing took {}µs", start.elapsed().as_micros());
+
     let start = Instant::now();
     let solution1 = evolve(&grid, dims, first_rule)
         .iter()
         .filter(|&seat| seat == &Tile::Occupied)
         .count();
-    let duration = start.elapsed().as_micros();
-    println!("Solution 1 took {}us", duration);
+    println!("Solution 1 took {}µs", start.elapsed().as_micros());
     println!("Solution 1: {}", solution1);
 
     let start = Instant::now();
@@ -139,8 +141,7 @@ fn main() {
         .iter()
         .filter(|&seat| seat == &Tile::Occupied)
         .count();
-    let duration = start.elapsed().as_micros();
-    println!("Solution 2 took {}us", duration);
+    println!("Solution 2 took {}µs", start.elapsed().as_micros());
     println!("Solution 2: {}", solution2)
 }
 

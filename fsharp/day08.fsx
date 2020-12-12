@@ -1,4 +1,5 @@
 open System.IO
+open System.Diagnostics
 open FSharp.Core
 open FSharp.Collections
 
@@ -61,16 +62,23 @@ let fix (instructions: Instruction []) (executedInstructions: Set<int>): int =
             ignore (Array.set instructions instrPtr oldInstr)
             None)
 
-
+let mutable start = Stopwatch.StartNew()
 let data =
     "../input/day08.txt"
     |> File.ReadAllLines
     |> Array.map parse
+printfn "Parsing took %fms" start.Elapsed.TotalMilliseconds
 
+start.Reset
+start.Start
 let _, exec =
     run data Set.empty 0 0
     |> function
         | Error (acc, exec) -> printfn "Solution 1: %d" acc, exec
         | Ok _ -> failwith "Programm exited successfully"
+printfn "Solution 1 took %fms" start.Elapsed.TotalMilliseconds
 
+start.Reset
+start.Start
 fix data exec |> printfn "Solution 2: %d"
+printfn "Solution 2 took %fms" start.Elapsed.TotalMilliseconds

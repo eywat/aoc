@@ -1,4 +1,4 @@
-use std::collections::{HashMap, HashSet};
+use std::{collections::{HashMap, HashSet}, time::Instant};
 use util::split_once;
 
 const INPUT: &str = include_str!("../../../input/day04.txt");
@@ -23,7 +23,6 @@ fn filter_valid<'a>(
         })
 }
 
-#[timed::timed]
 fn solve1(input: &str) -> usize {
     let required_keys = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"]
         .iter()
@@ -83,7 +82,6 @@ fn valid_pid(pid: &str) -> bool {
     pid.len() == 9 && pid.chars().all(|c| c.is_ascii_digit())
 }
 
-#[timed::timed]
 fn solve2(input: &str) -> usize {
     let required_keys = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"]
         .iter()
@@ -113,8 +111,15 @@ fn solve2(input: &str) -> usize {
 }
 
 fn main() {
-    println!("Solution 1: {}", solve1(INPUT));
-    println!("Solution 2: {}", solve2(INPUT));
+    let start = Instant::now();
+    let solution1 = solve1(INPUT);
+    println!("Solution 1 took {}µs", start.elapsed().as_micros());
+    println!("Solution 1: {}", solution1);
+    
+    let start = Instant::now();
+    let solution2 = solve2(INPUT);
+    println!("Solution 2 took {}µs", start.elapsed().as_micros());
+    println!("Solution 2: {}", solution2);
 }
 
 #[cfg(test)]

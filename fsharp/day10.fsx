@@ -1,4 +1,5 @@
 open System.IO
+open System.Diagnostics
 open FSharp.Collections
 
 let parse input =
@@ -26,18 +27,22 @@ let rec numCombinations (paths: Map<int, uint64>) =
 
         numCombinations (Map.add head nPaths paths) tail
 
-
+let mutable start = Stopwatch.StartNew()
 let data =
     File.ReadLines "../input/day10.txt"
     |> Seq.toList
     |> parse
+printfn "Parsing took %fms" start.Elapsed.TotalMilliseconds
 
-
+start.Reset
+start.Start
 joltageDiff (0, 0) data
 |> fun (ones, threes) -> ones * threes
 |> printfn "Solution 1: %d"
+printfn "Solution 1 took %fms" start.Elapsed.TotalMilliseconds
 
-
+start.Reset
+start.Start
 data
 |> function
 | head :: tail ->
@@ -45,3 +50,4 @@ data
     |> Map.find (List.last data)
     |> printfn "Solution 2: %d"
 | [] -> failwith "Empty list"
+printfn "Solution 2 took %fms" start.Elapsed.TotalMilliseconds

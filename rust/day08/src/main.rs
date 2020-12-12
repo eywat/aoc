@@ -1,4 +1,4 @@
-use std::collections::HashSet;
+use std::{collections::HashSet, time::Instant};
 use util::split_once;
 
 const INPUT: &str = include_str!("../../../input/day08.txt");
@@ -97,11 +97,19 @@ impl Program {
 }
 
 fn main() {
+    let start = Instant::now();
     let mut prog = Program::new(INPUT);
+    println!("Parsing took {}µs", start.elapsed().as_micros());
+
+    let start = Instant::now();
     let solution1 = prog.run().expect_err("The programm should loop");
-    println!("Solution 1: {}", solution1);
     prog.reset();
+    println!("Solution 1 took {}µs", start.elapsed().as_micros());
+    println!("Solution 1: {}", solution1);
+    
+    let start = Instant::now();
     let solution2 = prog.fix().unwrap();
+    println!("Solution 2 took {}µs", start.elapsed().as_micros());
     println!("Solution 2: {}", solution2);
 }
 

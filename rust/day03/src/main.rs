@@ -1,6 +1,7 @@
+use std::time::Instant;
+
 const INPUT: &str = include_str!("../../../input/day03.txt");
 
-#[timed::timed]
 fn solve1(input: &str, (right, down): (usize, usize)) -> usize {
     const TREE: char = '#';
     let mut movement = right;
@@ -17,7 +18,6 @@ fn solve1(input: &str, (right, down): (usize, usize)) -> usize {
         .count()
 }
 
-#[timed::timed]
 fn solve2(input: &str) -> usize {
     const SLOPES: [(usize, usize); 5] = [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)];
     SLOPES
@@ -27,8 +27,15 @@ fn solve2(input: &str) -> usize {
 }
 
 fn main() {
-    println!("Solution 1: {}", solve1(INPUT, (3, 1)));
-    println!("Solution 2: {}", solve2(INPUT));
+    let start = Instant::now();
+    let solution1 = solve1(INPUT, (3,1));
+    println!("Solution 1 took {}µs", start.elapsed().as_micros());
+    println!("Solution 1: {}", solution1);
+    
+    let start = Instant::now();
+    let solution2 = solve2(INPUT);
+    println!("Solution 2 took {}µs", start.elapsed().as_micros());
+    println!("Solution 2: {}", solution2);
 }
 
 #[cfg(test)]

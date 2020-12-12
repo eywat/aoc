@@ -1,3 +1,5 @@
+use std::time::Instant;
+
 const INPUT: &str = include_str!("../../../input/day09.txt");
 
 fn parse(input: &str) -> Vec<isize> {
@@ -14,7 +16,6 @@ fn sum_of_ancestors_exists(ancestors: &[isize], target: isize) -> bool {
         .any(|number| set.contains(&(target-number)))
 }
 
-#[timed::timed]
 fn invalid_number(input: &[isize]) -> Option<isize> {
     input.windows(26).find_map(|window| {
         if !sum_of_ancestors_exists(&window[..25], window[25]) {
@@ -25,7 +26,6 @@ fn invalid_number(input: &[isize]) -> Option<isize> {
     })
 }
 
-#[timed::timed]
 fn invalid_number_summands<'a>(input: &'a [isize], target: isize) -> Option<&'a [isize]> {
     (2..input.len()).find_map(|i| {
         input
@@ -35,9 +35,16 @@ fn invalid_number_summands<'a>(input: &'a [isize], target: isize) -> Option<&'a 
 }
 
 fn main() {
+    let start = Instant::now();
     let input = parse(INPUT);
+    println!("Parsing took {}µs", start.elapsed().as_micros());
+
+    let start = Instant::now();
     let solution1 = invalid_number(&input).expect("No invalid number found!");
+    println!("Solution 1 took {}µs", start.elapsed().as_micros());
     println!("Solution 1: {}", solution1);
+
+    let start = Instant::now();
     let solution2 = {
         let summands =
             invalid_number_summands(&input, solution1).expect("No continuous slice found");
@@ -47,6 +54,7 @@ fn main() {
             .map(|(min, max)| min + max)
             .expect("Empty list")
     };
+    println!("Solution 1 took {}µs", start.elapsed().as_micros());
     println!("Solution 2: {}", solution2);
 }
 

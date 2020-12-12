@@ -1,4 +1,5 @@
 open System.IO
+open System.Diagnostics
 
 let lines = File.ReadLines 
 
@@ -12,16 +13,24 @@ let solve2 data =
     |> Seq.find(fun (x,y,z) -> x + y + z = 2020)
     |> fun (x,y,z) -> x*y*z
 
+let mutable start = Stopwatch.StartNew()
 let data = 
     "../input/day01.txt" 
     |> lines 
     |> Seq.map(int) 
     |> Seq.toList
+printfn "Parsing took %fms" start.Elapsed.TotalMilliseconds
 
+start.Reset
+start.Start
 data
     |> solve1 
     |> printfn "%A"
+printfn "Solution 1 took %fms" start.Elapsed.TotalMilliseconds
 
+start.Start
+start.Reset
 data
     |> solve2
     |> printfn "%A"
+printfn "Solution 2 took %fms" start.Elapsed.TotalMilliseconds

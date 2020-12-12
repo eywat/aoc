@@ -1,10 +1,11 @@
+use std::time::Instant;
+
 use util::split_once;
 
 const INPUT: &str = include_str!("../../../input/day02.txt");
 
 type PWRules<'a> = (usize, usize, char, &'a str);
 
-#[timed::timed]
 fn parse(input: &str) -> Vec<PWRules> {
     input
         .lines()
@@ -21,7 +22,6 @@ fn parse(input: &str) -> Vec<PWRules> {
         .collect()
 }
 
-#[timed::timed]
 fn solve1(input: &[PWRules]) -> usize {
     input
         .iter()
@@ -32,7 +32,6 @@ fn solve1(input: &[PWRules]) -> usize {
         .count()
 }
 
-#[timed::timed]
 fn solve2(input: &[PWRules]) -> usize {
     input
         .iter()
@@ -46,10 +45,19 @@ fn solve2(input: &[PWRules]) -> usize {
 }
 
 fn main() {
+    let start = Instant::now();
     let input = parse(INPUT);
+    println!("Parsing took {}µs", start.elapsed().as_micros());
 
-    println!("Solution 1: {}", solve1(&input));
-    println!("Solution 2: {}", solve2(&input));
+    let start = Instant::now();
+    let solution1 = solve1(&input);
+    println!("Solution 1 took {}µs", start.elapsed().as_micros());
+    println!("Solution 1: {}", solution1);
+    
+    let start = Instant::now();
+    let solution2 = solve2(&input);
+    println!("Solution 2 took {}µs", start.elapsed().as_micros());
+    println!("Solution 2: {}", solution2);
 }
 
 #[cfg(test)]

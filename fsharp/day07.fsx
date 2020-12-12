@@ -1,4 +1,5 @@
 open System.IO
+open System.Diagnostics
 open System.Text.RegularExpressions
 open FSharp.Collections
 
@@ -44,18 +45,26 @@ let rec numberOfBags (bag: Bag) (rules: Map<Bag, Contents>): int =
     | _ -> 0
 
 
+let mutable start = Stopwatch.StartNew()
 let data =
     "../input/day07.txt"
     |> File.ReadLines
     |> Seq.map parse
     |> Map.ofSeq
+printfn "Parsing took %fms" start.Elapsed.TotalMilliseconds
 
+start.Reset
+start.Start
 data
 |> Map.toSeq
 |> Seq.filter (fun (rule, _) -> containsBag (Bag "shiny gold") rule data)
 |> Seq.length
 |> printfn "Solution 1: %d"
+printfn "Solution 1 took %fms" start.Elapsed.TotalMilliseconds
 
+start.Reset
+start.Start
 data
 |> numberOfBags (Bag "shiny gold")
 |> printfn "Solution 2: %d"
+printfn "Solution 2 took %fms" start.Elapsed.TotalMilliseconds

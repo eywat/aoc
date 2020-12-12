@@ -11,7 +11,6 @@ struct Bag<'a>(&'a str);
 type Contents<'a> = Vec<(usize, Bag<'a>)>;
 type Rules<'a> = HashMap<Bag<'a>, Contents<'a>>;
 
-#[timed::timed]
 fn parse(input: &str) -> Rules {
     let bag = Regex::new(r"^\w+\s\w+").unwrap();
     let contents = Regex::new(r"(?P<count>\d+)\s(?P<color>\w+\s\w+)").unwrap();
@@ -56,20 +55,22 @@ fn count_bags(bag: &Bag, rules: &Rules) -> usize {
 
 fn main() {
     const BAG: Bag = Bag("shiny gold");
+
+    let start = Instant::now();
     let input = parse(INPUT);
+    println!("Parsing took {}µs", start.elapsed().as_micros());
+    
     let start = Instant::now();
     let solution1 = input
         .keys()
         .filter(|rule| contains_bag(&BAG, rule, &input))
         .count();
-    let duration = Instant::now() - start;
-    println!("Solution 1 took {}µs", duration.as_micros());
+    println!("Solution 1 took {}µs", start.elapsed().as_micros());
     println!("Solution 1: {}", solution1);
 
     let start = Instant::now();
     let solution2 = count_bags(&BAG, &input);
-    let duration = Instant::now() - start;
-    println!("Solution 2 took {}µs", duration.as_micros());
+    println!("Solution 2 took {}µs", start.elapsed().as_micros());
     println!("Solution 2: {}", solution2);
 }
 

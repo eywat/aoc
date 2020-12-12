@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::{collections::HashMap, time::Instant};
 
 const INPUT: &str = include_str!("../../../input/day10.txt");
 
@@ -13,7 +13,6 @@ fn parse(input: &str) -> Vec<usize> {
     output
 }
 
-#[timed::timed]
 fn joltage_diff(input: &[usize]) -> usize {
     let (ones, threes) = input.windows(2).fold((0, 0), |(ones, threes), window| {
         match window[1] - window[0] {
@@ -25,7 +24,6 @@ fn joltage_diff(input: &[usize]) -> usize {
     ones * threes
 }
 
-#[timed::timed]
 fn reachable(input: &[usize]) -> HashMap<usize, Vec<usize>> {
     let mut map: HashMap<usize, Vec<usize>> = HashMap::with_capacity(input.len());
     for jolt in input.iter() {
@@ -62,13 +60,21 @@ fn dfs(
 }
 
 fn main() {
+    let start = Instant::now();
     let input = parse(INPUT);
+    println!("Parsing took {}µs", start.elapsed().as_micros());
+    
+    let start = Instant::now();
     let solution1 = joltage_diff(&input);
+    println!("Solution 1 took {}µs", start.elapsed().as_micros());
     println!("Solution 1: {}", solution1);
+    
+    let start = Instant::now();
     let graph = reachable(&input);
     let mut paths = HashMap::with_capacity(input.len());
     let solution2 = dfs(&graph, &mut paths, &0, &input.last().unwrap());
-    println!("{:?}", solution2);
+    println!("Solution 2 took {}µs", start.elapsed().as_micros());
+    println!("Solution 2: {}", solution2);
 }
 
 #[cfg(test)]
