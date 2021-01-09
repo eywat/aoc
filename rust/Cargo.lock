@@ -76,6 +76,8 @@ version = "0.1.0"
 dependencies = [
  "regex",
 ]
+name = "day13"
+version = "2020.12.13"
 
 [[package]]
 name = "lazy_static"
