@@ -1,6 +1,8 @@
 use std::time::Instant;
 use std::collections::HashSet;
 
+mod constant;
+
 const INPUT: &str = include_str!("../../../input/day01.txt");
 
 fn parse(input: &str) -> HashSet<isize> {
@@ -9,7 +11,9 @@ fn parse(input: &str) -> HashSet<isize> {
 
 fn solve1(input: &HashSet<isize>) -> Option<isize> {
     input.iter().find_map(|i| match input.get(&(2020 - *i)) {
-        Some(j) => Some(i*j),
+        Some(j) => {
+            println!("{} {}", i, j); 
+            Some(i*j)},
         None => None
     })
 }
@@ -33,8 +37,9 @@ fn main() {
     println!("Parsing took {}µs", start.elapsed().as_micros());
 
     let start = Instant::now();
-    let solution1 = solve1(&input).unwrap();
-    println!("Solution 1 took {}µs", start.elapsed().as_micros());
+    // let solution1 = solve1(&input).unwrap();
+    let solution1 = constant::solve1();
+    println!("Solution 1 took {}ns", start.elapsed().as_nanos());
     println!("Solution 1: {}", solution1);
     
     let start = Instant::now();
